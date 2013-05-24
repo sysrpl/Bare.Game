@@ -35,6 +35,8 @@ tools/installer/
 *.htm
 *.html
 *.asp
+*.zip
+*.7z
 tools/replace/*.txt
 examples/textures
 examples/win
