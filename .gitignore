@@ -15,6 +15,35 @@ local.properties
 .classpath
 .settings/
 .loadpath
+conversion/
+source/help/
+source/mirror/
+tools/installer/
+*.exe
+*.dll
+*.so
+*.o
+*.png
+*.jpg
+*.or
+*.wav
+*.mp3
+*.gif
+*.compiled
+*.ico
+*.ppu
+*.htm
+*.html
+*.asp
+tools/replace/*.txt
+examples/textures
+examples/win
+examples/sprite
+tools/designtest
+tools/redirect
+tools/docgen
+source/removed
+lib
 
 # External tool builders
 .externalToolBuilders/
