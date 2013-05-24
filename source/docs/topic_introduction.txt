@@ -1,0 +1,7 @@
+Summary
+Because Bare Game is minimal, it is easy to learn and easy to use
+
+Description
+Bare Game gets out of your way allowing you to work on what's important, your games. It provides a clean wrapper around the forthcoming <exref target="http://www.libsdl.org">SDL 2.0</exref> open source cross platform multimedia library adding imaging, animation, networking, and xml support. Bare Game also provides <link Bare, well orgranized> easy to use <link Bare.System, runtime> and <link Bare.Game, gaming> features.
+
+With your help soon Bare Game will allow everyone to create games and other visually interactive apps for many other desktop and mobile platforms including Mac OSX, iOS, Android, and the Ouya and Steambox gaming consoles. We are looking for testers, forum moderators, and if you feel up to it coding team members.

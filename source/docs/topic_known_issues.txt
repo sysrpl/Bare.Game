@@ -1,0 +1,7 @@
+Summary
+The following is a list of know issues
+
+Description
+Here are some problems you might encounter and what to do about them
+* The Lazarus code editor cuts off the top (to fix: resize the window and everything should pop back in place)
+* Cannot compile program error points to imaging unit (to fix: double click the barerun package in the project inspector then press the package compile button)

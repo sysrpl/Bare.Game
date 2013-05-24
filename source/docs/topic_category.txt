@@ -1,0 +1,5 @@
+Summary
+Listing of functionality by category
+
+Description
+Functionality can be grouped into the following categories

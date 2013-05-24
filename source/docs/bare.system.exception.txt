@@ -1,0 +1,4 @@
+Exception is the base class from which all exceptions should derive
+
+Description
+Detailed description of Exception here

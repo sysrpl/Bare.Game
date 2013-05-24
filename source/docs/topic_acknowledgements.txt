@@ -1,0 +1,9 @@
+Summary
+We'd like to give some special thanks
+
+Description
+There have been a few people who've helped use quite a bit and it would be thoughtless not to give them credit.
+* Thanks to Sam Lantinga for being the original creator of SDL and working this past year to bring us SDL 2.0
+* Thanks to Florian Klämpfl for creating and helping to maintina the Free Pascal Compiler for a time closing in on two decades
+* Thanks to Sven Barth for adding lots of new and exciting features to FPC including too many to list
+* Thanks to Mattias Gaertner for writing so much in the Lazarus IDE as well as addresing some bugs we sent your way

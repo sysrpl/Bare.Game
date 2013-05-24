@@ -1,0 +1,7 @@
+Summary
+Bare Game is most effective when paired with the Lazarus IDE
+
+Description
+[video lazarus][box Using the Lazarus IDE]The <exref target="http://www.lazarus.freepascal.org">Lazarus IDE</exref> is a open source cross platform graphical software development environment designed to be paired with the <exref target=""http://www.freepascal.org/">Free Pascal Compiler</exref>. Both Lazarus and FPC strive to make write once compile anywhere software a reality. Bare Game endeavors to bring this goal one step further with native code pascal games capable of running anywhere.
+
+For those unfamiliar with Lazarus or FPC, here are a few quick tips and links to external resources should you need them.

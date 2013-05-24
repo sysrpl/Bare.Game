@@ -1,0 +1,5 @@
+Summary
+Please read the information in this section
+
+Description
+Bare Game would not exist for the hard work of many other people in the open source community. The <exref target="http://www.libsdl.org">SDL 2.0 library</exref> does most of the work in Bare Game, while the <exref target="http://www.freepascal.org/">Free Pascal Compiler</exref> turns our library into runnable code for every platform. The <exref target="http://www.lazarus.freepascal.org/">Lazarus IDE</exref> makes developing games that much easier. Please show your support for those projects by visting their websites and joining the open source community.

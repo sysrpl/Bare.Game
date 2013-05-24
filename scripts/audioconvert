@@ -1,0 +1,28 @@
+#!/bin/sh
+
+found=0
+script=`basename $0`
+usage=\
+"this script converts mp3 to ms pcm compressed wave\n\
+usage: $script filename.mp3"
+
+extract() {
+	filename=$1
+	if [ ! -f "$filename" ]; then
+    echo $usage    
+		echo "file '$filename' was not found"
+    exit
+	fi
+	filebase=${filename%.*}	
+	ffmpeg -y -i "$filename" -ar 22050 -acodec adpcm_ms "$filebase.wav"
+	found=1
+}
+
+for arg in "$@"; do
+	extract "$arg"
+done
+
+if [ $found -eq 0 ]; then
+	echo $usage
+	echo "there were no files to convert"
+fi

@@ -1,0 +1,7 @@
+TStream is a base class for stream objects which can read from or write to various type of media
+
+Description
+Detailed description of TStream here
+
+See also
+<link !!MEMBEROVERVIEW_Bare.TStream, TStream members>

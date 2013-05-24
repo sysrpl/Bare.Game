@@ -1,0 +1,7 @@
+Summary
+This website is automatically generated every night
+
+Description
+This website is not created in the usual manner. It is automatially generated from source code and other resource files and run through a series of command line utilities and scripts which output html and stylesheets. As such, everything is very easy to reorganise, but there might be times when this site cannot be reached (such as when the site is being rebuilt). We are working on adding features to the site including a searchable index as well a feature synchronize the tree on the left with the content in the middle.
+
+Having said that, we hope how we've choosen to organise our content is of help to our users. If you have any problems or see something which need correcting, don't hestistate to <exref target="mailto:sysrpl@baregam.org?subject=Feedback">contact us</exref>.

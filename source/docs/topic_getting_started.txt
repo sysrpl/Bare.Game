@@ -1,0 +1,5 @@
+Summary
+If you have a PC running Windows or Linux you can start playing with Bare Game right now
+
+Description
+All you need to get started with Bare Game is a computer running with Microsoft Windows or Linux (we're working on Mac OSX support). We've designed an installer to get a Bare Game with the <exref target="http://www.lazarus.freepascal.org">Lazarus IDE</exref> working on your PC in just a few minutes.

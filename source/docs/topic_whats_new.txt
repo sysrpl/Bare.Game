@@ -1,0 +1,5 @@
+Summary
+A chronological list of the Bare Game changes
+
+Description
+The most recent version of Bare Game is X. You can update your copy in <link topic_using_lazarus, Lazarus> by selecting Help %gt; About Bare Game from the IDE menus, then clicking the "Check for updates" button. If an updte is found you will be asked for permission to upgrade your copy. If you choose not install Lazarus, you can run the <link topic_installation, Bare Bare Installer> and choose just Bare Game in the options to obtain the lastests version of Bare Game as well as the <link topic_resources, lastest SDL 2.0 libraries>.

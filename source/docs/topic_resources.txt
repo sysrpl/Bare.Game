@@ -1,0 +1,9 @@
+Summary
+Here are some links you might find useful
+
+Description
+We'll try to keep this list updated and relevant
+* Here is the latest <exref target="http://www.baregame.org/download/?file=bare.7z">Bare Game library</exref> source code
+* Here are the latest precompiled <exref target="http://www.baregame.org/download/?file=lib.7z">static and dynamic libraries of SDL 2.0</exref> (for Microsoft Windows and Linux on i386 and x86_64 architectures)
+* Here is the <exref target="http://www.baregame.org/download/?file=setup.exe">Bare Game Instaler</exref> for Microsoft Windows
+* Here is the <exref target="http://www.baregame.org/download/?file=bare-install.sh">Linux install script</exref> for Debian based distros (type sh bare-install.sh in a terminal window to install)

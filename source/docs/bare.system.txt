@@ -1,0 +1,10 @@
+The Base.System namespace provides a minimal runtime library
+Description:
+This namespace supports functionality in the following categories
+<xtable width="100%" columnwidths="33c%, 67c%">
+  Functionality                                          Description
+  -----------------------------------------------------  -------------------------------------------------------------------------
+  <link topic_string, String Handling Routines>          Routines useful when working with strings
+</xtable>
+
+Other functionality provided by this namespace is summarized below

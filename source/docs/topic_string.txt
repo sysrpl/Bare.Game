@@ -1,0 +1,5 @@
+Summary
+Functionality useful when working with strings
+
+Description
+The following is a list of functionality from the <link Bare.System, Bare.System> namespace and is useful in handling strings

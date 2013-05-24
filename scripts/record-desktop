@@ -1,0 +1,64 @@
+#!/bin/bash
+
+
+if [ -z "$BASH" ]; then
+	echo "run this script with bash and not sh"
+	exit
+fi
+
+
+function usage() {
+	script=`basename $0`
+	echo "this script records desktop audio and video"
+	echo "usage: $script [--audio] [--loopback] videofile.mp4"
+	echo "	--audio	record audio in addition to video"
+	echo "	--loop	loopback microphone into speakers"
+}
+
+audio=0
+loop=0
+
+while [[ $1 = -* ]]; do
+    arg=$1; shift          
+
+    case $arg in
+        --audio)
+            audio=1
+            ;;
+        --loop)
+            loop=1
+            ;;
+    esac
+done
+
+if [ $# -eq 0 ]; then
+	usage
+	exit
+fi
+
+if [ $audio -eq 0 ]; then
+	loop=0
+fi
+
+size=$(xdpyinfo | grep dim | awk '{print $2}')
+
+if [ $loop -eq 1 ]; then
+	trap cleanup INT
+	pactl load-module module-loopback
+fi
+
+if [ $audio -eq 0 ]; then
+	ffmpeg -f x11grab -r 30 -s $size -i :0.0 -vcodec libx264 -vpre lossless_ultrafast -threads 0 $1
+fi
+
+if [ $audio -eq 1 ]; then
+	ffmpeg -f alsa -ac 2 -i pulse -f x11grab -r 30 -s $size -i :0.0 -vcodec libx264 -vpre lossless_ultrafast -threads 0 $1
+fi
+
+if [ $loop -eq 1 ]; then
+	pactl unload-module module-loopback
+fi
+
+cleanup() {
+	pactl unload-module module-loopback
+} 

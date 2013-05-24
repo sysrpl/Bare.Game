@@ -1,0 +1,27 @@
+Summary
+How to get Bare Game installed
+
+Description
+[video install][box How to install Bare Game]If you have a PC running Linux or Microsoft Windows getting started with Bear Game is simple
+
+* For Microsoft Windows users *
+1. Download the <exref target="http://www.baregame.org/download/?file=setup.exe">setup program</exref>
+2. Run setup.exe, agree to the terms and conditions then click install
+3. After a few minutes (depending on your Internet speed) you will have Bare Game installed
+
+* For Debian based Linux users *
+1. Download the <exref target="http://www.baregame.org/download/?file=bare-install.sh">install script</exref>
+2. Open a terminal in the directory where the install script is located
+3. Type "sh ./bare-game.sh" where you may need to provide permission to install package dependencies
+4. Agree to the terms and conditions in the setup program then click install
+5. After a few minutes (depending on your Internet speed) you will have Bare Game installed
+
+* Other Linux users *
+1. Download the <exref target="http://www.baregame.org/download/?file=bare-install.sh">install script</exref>
+2. Edit the install script script to use your package manager and follow the steps above for Debian based Linux
+
+Windows users can access Bare Game again by pressing the start key typing "Bare Game"
+
+Linux Gnome and KDE users can access Bare Game again by pressing the Super key and typing "Bare Game"
+
+The Bare Game source code is <exref target="http://www.baregame.org/download/?file=bare.7z">available here</exref> and also on the <link topic_resources, resources topic>. To compile you'll need to use the 2.7.1 or greter trunk version of FPC.

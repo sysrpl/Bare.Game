@@ -1,0 +1,29 @@
+Summary
+Writing games with Bare Game is as easy as it can possibly get
+
+Description
+The canonical "Hello World" app in Bare Game looks like this:
+<code lang="delphi"><![CDATA[
+program hello;
+
+uses
+  Bare.Game;
+
+begin
+  Application.CreateWindow(TWindow).Caption = 'Hello Gaming World';
+  Application.Run;
+end.
+]]></code>
+
+Or if you don't care to have a specific window title you could simply write:
+<code lang="delphi"><![CDATA[
+program hello;
+
+uses
+  Bare.Game;
+
+begin
+  Application.Run(TWindow);
+end.
+]]></code>
+
