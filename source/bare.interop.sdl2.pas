@@ -322,7 +322,7 @@ const
 type
   SDL_Surface = packed record
     flags: Uint32; { Read-only }
-    format: TSDL_PixelFormat; { Read-only }
+    format: PSDL_PixelFormat; { Read-only }
     w, h: LongInt; { Read-only }
     pitch: LongInt; { Read-only }
     pixels: Pointer; { Read-write }
