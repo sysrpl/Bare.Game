@@ -48,7 +48,7 @@ if [ $loop -eq 1 ]; then
 fi
 
 if [ $audio -eq 0 ]; then
-	ffmpeg -f x11grab -r 30 -s $size -i :0.0 -vcodec libx264 -vpre lossless_ultrafast -threads 0 $1
+	ffmpeg -f x11grab -r 30 -s $size -i :0.0 -c:v libx264 -qp 0 -preset ultrafast -profile:v high444 -threads 0 $1
 fi
 
 if [ $audio -eq 1 ]; then

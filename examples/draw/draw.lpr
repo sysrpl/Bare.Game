@@ -1,4 +1,4 @@
-program game;
+program draw;
 
 {$mode delphi}
 
@@ -15,7 +15,7 @@ uses
 
 type
   TDrawExample = class(TWorldWindow)
-	private
+  private
     FBackground: TBackgroudSprite;
     FSprite: TSprite;
     FDrawing: Boolean;
@@ -70,48 +70,48 @@ begin
   if (Keyboard.Key[VK_F2]) and (not FPerspectiveView) then
   begin
     { If the F2 key is pressed switch to a perspective view }
-		FPerspectiveView := True;
+    FPerspectiveView := True;
     FPerspectiveTime := Stopwatch.Time;
   end;
   if (Keyboard.Key[VK_F3]) and FPerspectiveView then
   begin
     { If the F3 key is pressed switch to am othographic view }
-		FPerspectiveView := False;
+    FPerspectiveView := False;
     FPerspectiveTime := Stopwatch.Time;
   end;
   { Animate the view changes using an easing }
   if FPerspectiveView then
   begin
-	  FPerspectiveFactor := (Stopwatch.Time - FPerspectiveTime);
+    FPerspectiveFactor := (Stopwatch.Time - FPerspectiveTime);
     FPerspectiveFactor := Easings['Bounce'](FPerspectiveFactor);
-  	if FPerspectiveFactor > 1 then
-	  	FPerspectiveFactor := 1;
+    if FPerspectiveFactor > 1 then
+      FPerspectiveFactor := 1;
   end
   else if FPerspectiveFactor > 0 then
   begin
-	  FPerspectiveFactor := (Stopwatch.Time - FPerspectiveTime);
-  	if FPerspectiveFactor > 1 then
-	  	FPerspectiveFactor := 1;
+    FPerspectiveFactor := (Stopwatch.Time - FPerspectiveTime);
+    if FPerspectiveFactor > 1 then
+      FPerspectiveFactor := 1;
     FPerspectiveFactor := Easings['Bounce'](FPerspectiveFactor);
     FPerspectiveFactor := 1 - FPerspectiveFactor;
   end;
   { Draw when the left mouse button is down }
   if mbLeft in Mouse.Buttons then
-	begin
+  begin
     if not FDrawing then
     begin
-			Canvas.Path.Clear;
-	  	Canvas.Path.MoveTo(Mouse.X, Mouse.Y)
+      Canvas.Path.Clear;
+      Canvas.Path.MoveTo(Mouse.X, Mouse.Y)
     end
     else if (Mouse.X <> FX) or (Mouse.Y <> FY) then
-			Canvas.Path.LineTo(Mouse.X, Mouse.Y);
+      Canvas.Path.LineTo(Mouse.X, Mouse.Y);
     FDrawing := True;
   end
   else
     FDrawing := False;
   { Capture the last mouse X and Y coords }
-	FX := Mouse.X;
-	FY := Mouse.Y;
+  FX := Mouse.X;
+  FY := Mouse.Y;
 end;
 
 procedure TDrawExample.Render(Stopwatch: TStopwatch);
@@ -119,22 +119,22 @@ const
   Instructions = 'Press the left mouse button to draw';
   Status = 'Time: %.2f'#13#10'FPS: %d';
   Help = 'Press ESC to terminate - F1 Fullscreen toggle'#13#10 +
-  	'F2 Perspective view - F3 Orthographic view';
+    'F2 Perspective view - F3 Orthographic view';
 begin
   { Place your game render code here }
   World.Update;
   { Make our cracked fill the screen }
   FBackground.Size.X := World.Width;
   FBackground.Size.Y := World.Height;
-	FBackground.Texture := Textures[0];
+  FBackground.Texture := Textures[0];
   FBackground.Draw;
   { You can mix in opengl code if you want, here we add perspective manually }
   { You could also use the camera class }
- 	glRotatef(20 * FPerspectiveFactor, 0, 1, 0);
+  glRotatef(20 * FPerspectiveFactor, 0, 1, 0);
   glRotatef(20 * FPerspectiveFactor, 1, 0, 0);
   glTranslatef(10 * FPerspectiveFactor, -8 * FPerspectiveFactor, -4 * FPerspectiveFactor);
   { Make our background fill the world }
-	FBackground.Texture := Textures[1];
+  FBackground.Texture := Textures[1];
   FBackground.Draw;
   { Write some instructions }
   Font.Write(Instructions, 1, World.Width / 2, World.Height / 2, justifyCenter);
@@ -152,4 +152,3 @@ end;
 begin
   Application.Run(TDrawExample);
 end.
-
