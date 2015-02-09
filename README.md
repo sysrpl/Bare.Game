@@ -1,16 +1,6 @@
 # Bare.Game
 
 Bare Game is a open source modern minimal game cross platform gaming library. It was conceived to take the forthcoming SDL 2.0 game library and pair it with the Free Pascal Compiler, combining Free Pascal's write once compile anywhere philosophy with with SDL 2.0 ability to empower games on every platform. Bear Game wraps SDL 2.0 functions and defines in an extremely easy to reuse class library. It takes care of all the boilerplate plumbing required to get a game started and running on a variety of platforms, empowering you, the game creator, to focus on what you want to do, designing your game. 
-Bare Game has several features which endeavor to simplify tasks for game makers including: 
-
-Creating and managing one or more game windows
-Reading mouse keyboard gamepad and touch input states
-Accessing a hardware accelerated graphics pipeline and using shader programs
-Loading and saving image resources using a variety of formats
-Playing back and mixing audio
-Creating animations and storyboards
-Drawing in two dimensions with vector graphics and sprites
-Network communications
 
 ## Install
 
@@ -60,7 +50,20 @@ begin
 end.
 ```
 
+Press F9 to run the example. you should see a black window with the title TWindow1. Next open "Bare.Game/examples/draw/game.lpi", press F9. You should see a window with an animated cursor which allows you to draw lines when you press the left mouse button.
+
 ## More information
+
+Bare Game has several features which endeavor to simplify tasks for game makers including: 
+
+-Creating and managing one or more game windows
+-Reading mouse keyboard gamepad and touch input states
+-Accessing a hardware accelerated graphics pipeline and using shader programs
+-Loading and saving image resources using a variety of formats
+-Playing back and mixing audio
+-Creating animations and storyboards
+-Drawing in two dimensions with vector graphics and sprites
+-Network communications
 
 Bare Game also and has built in multithreaded support for separate game logic, render code, and user interface code. 
 
