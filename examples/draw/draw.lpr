@@ -130,11 +130,7 @@ begin
   FBackground.Draw;
   { You can mix in opengl code if you want, here we add perspective manually }
   { You could also use the camera class }
-<<<<<<< HEAD:examples/draw/draw.lpr
   glRotatef(20 * FPerspectiveFactor, 0, 1, 0);
-=======
-   glRotatef(20 * FPerspectiveFactor, 0, 1, 0);
->>>>>>> 960fb78c814a676a6e31a9d4e764edecc77897f7:examples/draw/game.lpr
   glRotatef(20 * FPerspectiveFactor, 1, 0, 0);
   glTranslatef(10 * FPerspectiveFactor, -8 * FPerspectiveFactor, -4 * FPerspectiveFactor);
   { Make our background fill the world }
