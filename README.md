@@ -56,14 +56,14 @@ Press F9 to run the example. you should see a black window with the title TWindo
 
 Bare Game has several features which endeavor to simplify tasks for game makers including: 
 
--Creating and managing one or more game windows
--Reading mouse keyboard gamepad and touch input states
--Accessing a hardware accelerated graphics pipeline and using shader programs
--Loading and saving image resources using a variety of formats
--Playing back and mixing audio
--Creating animations and storyboards
--Drawing in two dimensions with vector graphics and sprites
--Network communications
+- Creating and managing one or more game windows
+- Reading mouse keyboard gamepad and touch input states
+- Accessing a hardware accelerated graphics pipeline and using shader programs
+- Loading and saving image resources using a variety of formats
+- Playing back and mixing audio
+- Creating animations and storyboards
+- Drawing in two dimensions with vector graphics and sprites
+- Network communications
 
 Bare Game also and has built in multithreaded support for separate game logic, render code, and user interface code. 
 
