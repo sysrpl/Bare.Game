@@ -149,6 +149,7 @@ type
     procedure CheckBounds(const Method: string; Index: Integer);
     function GetCapacity: Integer;
     procedure SetCapacity(Value: Integer);
+    function GetReference(Index: Integer): Pointer;
     function GetItem(Index: Integer): TItem;
     procedure SetItem(Index: Integer; const Value: TItem);
   protected
@@ -182,6 +183,8 @@ type
     property Count: Integer read FCount;
     { Allocated space in terms of number of items }
     property Capacity: Integer read GetCapacity write SetCapacity;
+    { Get the memory location of an item }
+    property Reference[Index: Integer]: Pointer read GetReference;
     { Get or set an item in the list
       Remarks
       When setting the existing item will be deleted }
@@ -836,6 +839,12 @@ procedure TList<TItem>.SetCapacity(Value: Integer);
 begin
   if Value > FCapacity then
     Grow(Value);
+end;
+
+function TList<TItem>.GetReference(Index: Integer): Pointer;
+begin
+  CheckBounds('GetReference', Index);
+  Result := @FItems[Index];
 end;
 
 function TList<TItem>.GetItem(Index: Integer): TItem;

@@ -59,7 +59,7 @@ procedure TWorldWindow.DoKeyUp(var Args: TKeyboardArgs);
 begin
   inherited DoKeyUp(Args);
   if Args.Key = VK_F1 then
-   Fullscreen := not Fullscreen;
+		Fullscreen := not Fullscreen;
 end;
 
 procedure TWorldWindow.RenderInitialize;

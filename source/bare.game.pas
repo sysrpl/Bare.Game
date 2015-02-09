@@ -580,7 +580,7 @@ type
   See also
   <link Overview.Bare.Game.THardwareCollection, THardwareCollection members> }
 
-  THardwareCollection<T> = class(TOwnerCollection<T>)
+  THardwareCollection<T: TObject> = class(TOwnerCollection<T>)
   public
     {doc ignore}
     constructor Create;
@@ -1359,7 +1359,7 @@ type
     { Set to true when terminate is called }
     property Terminated: Boolean read FTerminated;
     { A <link Bare.Game.TWindows, TWindows> collection }
-    property Windows: TWindows;
+    property Windows: TWindows read FWindows;
     { Invoked when an unhandled exception occurs }
     property OnException: TExceptionEvent read FOnException write FOnException;
   end;
@@ -2299,7 +2299,7 @@ begin
   if Value then
     SDL_ShowCursor(1)
   else
-    SDL_ShowCursor(1);
+    SDL_ShowCursor(0);
 end;
 
 constructor TJoystickPart<T>.Create(Joystick: PSDL_Joystick);

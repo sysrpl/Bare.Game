@@ -380,7 +380,7 @@ end;
 
 function TFileDownload.Download(Files: TStrings): Boolean;
 var
-  S: string;
+  S, D: string;
 begin
   Result := False;
   Cancel;
@@ -391,11 +391,11 @@ begin
     Exit;
   for S in FDownloads do
   begin
-    S := ExtractFileName(S);
-    S := PathCombine(FFolder, S);
-    if not FileOverwrite(S) then
+    D := ExtractFileName(S);
+    D := PathCombine(FFolder, D);
+    if not FileOverwrite(D) then
       Exit;
-    FFiles.Add(S);
+    FFiles.Add(D);
   end;
   FComplete := 1;
   Result := True;

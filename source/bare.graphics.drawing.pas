@@ -219,6 +219,7 @@ function TSubPath.AssignFrom(Source: TObject): Boolean;
 var
   SubPath: TSubPath;
   Curve: TCurve2;
+  I: Integer;
 begin
   if Source is TSubPath then
   begin
@@ -226,8 +227,9 @@ begin
     FClosed := SubPath.FClosed;
     FCurves.Clear;
     FCurves.Capacity := SubPath.FCurves.Count;
-    for Curve in SubPath.FCurves do
+    for I := 0 to SubPath.FCurves.Count do
     begin
+			Curve := FCurves[I];
       { This makes the arrays unique ... don't ask me why there isn't more ergonomic way }
       SetLength(Curve.D, Length(Curve.D));
       SetLength(Curve.P, Length(Curve.P));
@@ -688,6 +690,14 @@ procedure TCanvas.Stroke(Pen: TPen; Clear: Boolean = True);
     FWorld.TexVertex(B + N, Vec2(1, 0));
   end;
 
+  procedure DrawCap(const A: TVec2; Width: Float);
+  begin
+    FWorld.TexVertex(Vec2(A.X - Width, A.Y - Width), Vec2(0, 0));
+    FWorld.TexVertex(Vec2(A.X - Width, A.Y + Width), Vec2(0, 1));
+    FWorld.TexVertex(Vec2(A.X + Width, A.Y + Width), Vec2(1, 1));
+    FWorld.TexVertex(Vec2(A.X + Width, A.Y - Width), Vec2(1, 0));
+  end;
+
 var
   SubPath: TSubPath;
   Curve: TCurve2;
@@ -696,9 +706,9 @@ var
 begin
   FWorld.Color(Pen.Color);
   Width := Pen.Width;
+  glDisable(GL_DEPTH_TEST);
   for I := 0 to FPath.FSubPaths.Count - 1 do
   begin
-    glDisable(GL_DEPTH_TEST);
     FWorld.BindTex(FTextures[TexStroke]);
     FWorld.BeginQuads;
     SubPath := FPath.FSubPaths[I];
@@ -712,19 +722,17 @@ begin
     end;
     FWorld.EndQuads;
     FWorld.UnbindTex;
-    glEnable(GL_DEPTH_TEST);
-    glClear(GL_DEPTH_BUFFER_BIT);
     FWorld.BindTex(FTextures[TexEndCap]);
-    FWorld.BeginPoints(Width * 2);
+    FWorld.BeginQuads;
     for J := 0 to SubPath.FCurves.Count - 1 do
     begin
       Curve := SubPath.FCurves[J];
       if Length(Curve.P) < 2 then
         Continue;
       for K := 0 to Length(Curve.P) - 1 do
-        FWorld.Vertex(Curve.P[K]);
+        DrawCap(Curve.P[K], Width * 0.8);
     end;
-    FWorld.EndPoints;
+    FWorld.EndQuads;
     FWorld.UnbindTex;
   end;
   glClear(GL_DEPTH_BUFFER_BIT);

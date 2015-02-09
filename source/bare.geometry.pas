@@ -369,6 +369,7 @@ type
     Ratio: Float;
     Intercept: Float;
   end;
+  PSlope2 = ^TSlope2;
 
 { TLine2 represents a 2d line }
 
@@ -387,6 +388,8 @@ type
       0: (P0, P1: TVec2);
       1: (P: array[0..1] of TVec2);
   end;
+  PLine2 = ^TLine2;
+
 
 { Build a 2d line given two points }
 function Line2(const P0, P1: TVec2): TLine2; overload; inline;
@@ -415,6 +418,7 @@ type
     { Approximated points over the curve }
     P: TVec2Array;
   end;
+  PCurve2 = ^TCurve2;
 
 { TBezier2 represents a 2d cubic bezier curve
   Remarks
@@ -437,6 +441,7 @@ type
       0: (P0, P1, P2, P3: TVec2);
       1: (P: array[0..3] of TVec2);
   end;
+  PBezier2 = ^TBezier2;
 
 { Build a 2d cubic bezier curve given four points }
 
