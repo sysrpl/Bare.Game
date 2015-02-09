@@ -23,8 +23,6 @@ tools/installer/
 *.dll
 *.so
 *.o
-*.png
-*.jpg
 *.or
 *.wav
 *.mp3
