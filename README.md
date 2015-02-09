@@ -28,7 +28,8 @@ If you recieve and error in splash.pas with a value of fsBlack, change it to clB
 
 When Lazarus resstart selct "File | New ... | Project | Game Project". You should see a unit list like this.
 
-```program Game1;
+```
+program Game1;
 
 {$mode delphi}
 
@@ -56,7 +57,8 @@ end;
 
 begin
   Application.Run(TWindow1);
-end.```
+end.
+```
 
 ## More information
 
