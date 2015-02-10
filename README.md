@@ -1,6 +1,11 @@
-# Bare.Game
+![Alt text](/splash.gif?raw=true "Bare Game")
 
-Bare Game is a open source modern minimal game cross platform gaming library. It was conceived to take the SDL 2.0 game library and pair it with the Free Pascal Compiler, combining Free Pascal's write once compile anywhere philosophy with with SDL 2.0 ability to empower games on every platform. Bear Game wraps SDL 2.0 functions and defines in an extremely easy to reuse class library. It takes care of all the boilerplate plumbing required to get a game started and running on a variety of platforms, empowering you, the game creator, to focus on what you want to do, designing your game. 
+[http://www.baregame.org](Bare Game) is a open source modern minimal game cross platform gaming library. It was conceived to take the SDL 2.0 game library and pair it with the Free Pascal Compiler, combining Free Pascal's write once compile anywhere philosophy with with SDL 2.0 ability to empower games on every platform. Bear Game wraps SDL 2.0 functions and defines in an extremely easy to reuse class library. It takes care of all the boilerplate plumbing required to get a game started and running on a variety of platforms, empowering you, the game creator, to focus on what you want to do, designing your game. 
+
+## Links
+
+- [http://www.baregame.org](Official Bare Game Website) 
+- [http://www.baregame.org/#bare_game](Official Bare Game API Documentation) 
 
 ## Install
 
