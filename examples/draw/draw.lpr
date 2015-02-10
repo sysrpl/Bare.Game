@@ -19,7 +19,7 @@ type
     FBackground: TBackgroudSprite;
     FSprite: TSprite;
     FDrawing: Boolean;
-    FBounce: TEasing;
+    FEasing: TEasing;
     FPerspectiveView: Boolean;
     FPerspectiveTime: Float;
     FPerspectiveFactor: Float;
@@ -40,7 +40,8 @@ begin
   Mouse.Visible := False;
   { We're going to use an easing in this sample }
   Easings.RegisterDefaults;
-  FBounce := Easings['Bounce'];
+  FEasing := Easings['Bounce'];
+  FPerspectiveTime := -1;
   { Setup our pen }
   Pen.Color := clHotPink;
   Pen.Width := 10;
@@ -81,13 +82,10 @@ begin
     FPerspectiveView := False;
     FPerspectiveTime := Stopwatch.Time;
   end;
-  if FPerspectiveView or (FPerspectiveFactor > 0) then
-  begin
-    { Animate the view changes using an easing }
-    FPerspectiveFactor := FBounce(Stopwatch.Time - FPerspectiveTime);
-    if not FPerspectiveView then
-      FPerspectiveFactor := 1 - FPerspectiveFactor;
-  end;
+  { Animate the view changes using an easing }
+  FPerspectiveFactor := FEasing(Stopwatch.Time - FPerspectiveTime);
+  if not FPerspectiveView then
+    FPerspectiveFactor := 1 - FPerspectiveFactor;
   if mbLeft in Mouse.Buttons then
   begin
     { Draw when the left mouse button is down }
