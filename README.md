@@ -50,7 +50,7 @@ begin
 end.
 ```
 
-Press F9 to run the example. you should see a black window with the title TWindow1. Next open "Bare.Game/examples/draw/draw.lpi", press F9. You should see a window with an animated cursor which allows you to draw lines when you press the left mouse button.
+Press F9 to run the example.You should see a black window with the title TWindow1. Next open "Bare.Game/examples/draw/draw.lpi" and press F9. You should see a window with an animated neon cursor and some instructional text. If both of those test pass, you've got a working install of Bare Game.
 
 ## More information
 
@@ -67,10 +67,4 @@ Bare Game has several features which endeavor to simplify tasks for game makers 
 
 Bare Game also and has built in multithreaded support for separate game logic, render code, and user interface code. 
 
-Bare Game is free and available for testing now. If you choose to use the installer it will setup SDL 2.0 on your system and the Bare Game library on your computer. You'll have the option to install the Free Pascal Compiler, along with the Lazarus IDE which has been enhanced the Bare Game extensions. 
-
-If you choose to follow our progress we'll be updating this website frequently, providing more documentation, tutorials, and we'll be listening to your feedback in making enhancements to Bare Game. 
-
-If you want to take part in the Bare Game community you can join us on the comminity forums.
-
-http://www.getlazarus.org/forums/viewforum.php?f=17
+If you want to take part in Bare Game discussions join us on the [community forums](http://www.getlazarus.org/forums/viewforum.php?f=17).
