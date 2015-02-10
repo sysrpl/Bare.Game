@@ -19,10 +19,11 @@ type
     FBackground: TBackgroudSprite;
     FSprite: TSprite;
     FDrawing: Boolean;
-    FX, FY: Float;
+    FBounce: TEasing;
     FPerspectiveView: Boolean;
     FPerspectiveTime: Float;
     FPerspectiveFactor: Float;
+    FX, FY: Float;
   protected
     procedure RenderInitialize; override;
     procedure RenderFinalize; override;
@@ -37,8 +38,9 @@ begin
   Caption := 'Drawing Demo';
   { We're drawing our own cursor }
   Mouse.Visible := False;
-  { We're going to use some easings in this sample }
+  { We're going to use an easing in this sample }
   Easings.RegisterDefaults;
+  FBounce := Easings['Bounce'];
   { Setup our pen }
   Pen.Color := clHotPink;
   Pen.Width := 10;
@@ -79,25 +81,16 @@ begin
     FPerspectiveView := False;
     FPerspectiveTime := Stopwatch.Time;
   end;
-  { Animate the view changes using an easing }
-  if FPerspectiveView then
+  if FPerspectiveView or (FPerspectiveFactor > 0) then
   begin
-    FPerspectiveFactor := (Stopwatch.Time - FPerspectiveTime);
-    FPerspectiveFactor := Easings['Bounce'](FPerspectiveFactor);
-    if FPerspectiveFactor > 1 then
-      FPerspectiveFactor := 1;
-  end
-  else if FPerspectiveFactor > 0 then
-  begin
-    FPerspectiveFactor := (Stopwatch.Time - FPerspectiveTime);
-    if FPerspectiveFactor > 1 then
-      FPerspectiveFactor := 1;
-    FPerspectiveFactor := Easings['Bounce'](FPerspectiveFactor);
-    FPerspectiveFactor := 1 - FPerspectiveFactor;
+    { Animate the view changes using an easing }
+    FPerspectiveFactor := FBounce(Stopwatch.Time - FPerspectiveTime);
+    if not FPerspectiveView then
+      FPerspectiveFactor := 1 - FPerspectiveFactor;
   end;
-  { Draw when the left mouse button is down }
   if mbLeft in Mouse.Buttons then
   begin
+    { Draw when the left mouse button is down }
     if not FDrawing then
     begin
       Canvas.Path.Clear;
@@ -128,8 +121,8 @@ begin
   FBackground.Size.Y := World.Height;
   FBackground.Texture := Textures[0];
   FBackground.Draw;
-  { You can mix in opengl code if you want, here we add perspective manually }
-  { You could also use the camera class }
+  { You can mix in opengl code if you want, here we add perspective manually,
+    you could also use the camera class }
   glRotatef(20 * FPerspectiveFactor, 0, 1, 0);
   glRotatef(20 * FPerspectiveFactor, 1, 0, 0);
   glTranslatef(10 * FPerspectiveFactor, -8 * FPerspectiveFactor, -4 * FPerspectiveFactor);
