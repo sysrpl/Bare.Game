@@ -4,19 +4,19 @@ Bare Game is a open source modern minimal game cross platform gaming library. It
 
 ## Install
 
-Install SDL 2 on your system. Ubuntu users type `sudo apt get install libsdl2-2.0-0`. Windows users download [SDL 2](https://www.libsdl.org/download-2.0.php) and place SDL2.dll in your `C:\Windows\System32` folder.
+Install SDL 2 on your system. Ubuntu users type `sudo apt get install libsdl2-2.0-0`. Windows users download [SDL 2](https://www.libsdl.org/download-2.0.php), extract the zip file, and place SDL2.dll in your `C:\Windows\System32` folder.
 
 Install Free Pascal fixes 3.0 and Lazarus, either using [getlazarus.org](http://www.getlazarus.org/setup) or [make it yourself](http://www.getlazarus.org/setup/making). 
 
 If you have git installed type `git clone git@github.com:sysrpl/Bare.Game.git` to git Bare.Game. Otherwise download a [zip file](https://github.com/sysrpl/Bare.Game/archive/master.zip) from github and extract it.
 
-Open Lazaurs, goto file "Packages | Open Package File" and browse to "Bare.Game/source/barerun.lpk". Press compile.
+Open Lazaurs, from the main menu select "Packages | Open Package File" and browse to "Bare.Game/source/barerun.lpk". In the packge window press compile.
 
-Goto file "Packages | Open Package File" and browse to "Bare.Game/tools/design/baredsgn.lpk". Press "Use | Install". Lazarus will rebuild itself.
+From the Lazarus main menu select "Packages | Open Package File" and browse to "Bare.Game/tools/design/baredsgn.lpk". In the packge window press "Use | Install". Lazarus will rebuild itself.
 
 If you recieve and error in splash.pas with a value of fsBlack, change it to clBlack, save the file, and repeat the step above.
 
-When Lazarus restarts, select "File | New ... | Project | Game Project" from the main menu. You should this skeletal program listing.
+When Lazarus restarts, select "File | New ... | Project | Game Project" from the main menu. You should see this skeletal program listing.
 
 ```
 program Game1;
