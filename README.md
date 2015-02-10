@@ -6,6 +6,7 @@
 
 - [Official Bare Game Website](http://www.baregame.org) 
 - [Official Bare Game API Documentation](http://www.baregame.org/#bare_game) 
+- [Walk through: Bare Game Draw Example](http://www.getlazarus.org/videos/baregame/) 
 
 ## Install
 
