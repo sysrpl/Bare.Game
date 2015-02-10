@@ -26,7 +26,6 @@ tools/installer/
 *.or
 *.wav
 *.mp3
-*.gif
 *.compiled
 *.ico
 *.ppu
