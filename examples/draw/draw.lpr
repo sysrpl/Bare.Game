@@ -83,7 +83,7 @@ begin
     FPerspectiveTime := Stopwatch.Time;
   end;
   { Animate the view changes using an easing }
-  FPerspectiveFactor := FEasing(Stopwatch.Time - FPerspectiveTime);
+  FPerspectiveFactor := Interpolate(FEasing, Stopwatch.Time - FPerspectiveTime);
   if not FPerspectiveView then
     FPerspectiveFactor := 1 - FPerspectiveFactor;
   if mbLeft in Mouse.Buttons then

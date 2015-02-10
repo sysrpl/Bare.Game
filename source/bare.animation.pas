@@ -235,26 +235,22 @@ const
 
 class function TEasingDefaults.Linear(Percent: Float): Float;
 begin
-  if Percent < 0 then Exit(0) else if Percent > 1 then Exit(1);
   Result := Percent;
 end;
 
 class function TEasingDefaults.Easy(Percent: Float): Float;
 begin
-  if Percent < 0 then Exit(0) else if Percent > 1 then Exit(1);
   Result := Percent * Percent * (3 - 2 * Percent);
 end;
 
 class function TEasingDefaults.EasySlow(Percent: Float): Float;
 begin
-  if Percent < 0 then Exit(0) else if Percent > 1 then Exit(1);
   Percent := Easy(Percent);
   Result := Percent * Percent * (3 - 2 * Percent);
 end;
 
 class function TEasingDefaults.Extend(Percent: Float): Float;
 begin
-  if Percent < 0 then Exit(0) else if Percent > 1 then Exit(1);
   Percent := (Percent * 1.4) - 0.2;
   Result := 0.5 - Cos(Pi * Percent) / NegCosPi;
 end;
@@ -271,19 +267,16 @@ end;
 
 class function TEasingDefaults.Drop(Percent: Float): Float;
 begin
-  if Percent < 0 then Exit(0) else if Percent > 1 then Exit(1);
   Result := Percent * Percent;
 end;
 
 class function TEasingDefaults.DropSlow(Percent: Float): Float;
 begin
-  if Percent < 0 then Exit(0) else if Percent > 1 then Exit(1);
   Result := Percent * Percent * Percent;
 end;
 
 class function TEasingDefaults.Snap(Percent: Float): Float;
 begin
-  if Percent < 0 then Exit(0) else if Percent > 1 then Exit(1);
   Percent := Percent * Percent;
   Percent := (Percent * 1.4) - 0.2;
   Result := 0.5 - Cos(Pi * Percent) / NegCosPi;
@@ -291,7 +284,6 @@ end;
 
 class function TEasingDefaults.Bounce(Percent: Float): Float;
 begin
-  if Percent < 0 then Exit(0) else if Percent > 1 then Exit(1);
   if Percent > 0.9 then
   begin
     Result := Percent - 0.95;
@@ -318,7 +310,6 @@ class function TEasingDefaults.Bouncy(Percent: Float): Float;
 var
   Scale, Start, Step: Float;
 begin
-  if Percent < 0 then Exit(0) else if Percent > 1 then Exit(1);
   Result := 1;
   Scale := 5;
   Start := 0.5;
@@ -347,7 +338,6 @@ end;
 
 class function TEasingDefaults.Rubber(Percent: Float): Float;
 begin
-  if Percent < 0 then Exit(0) else if Percent > 1 then Exit(1);
   if Percent > 0.9 then
   begin
     Result := Percent - 0.95;
@@ -372,7 +362,6 @@ end;
 
 class function TEasingDefaults.Spring(Percent: Float): Float;
 begin
-  if Percent < 0 then Exit(0) else if Percent > 1 then Exit(1);
   Percent := Percent * Percent;
   Result := Sin(PI * Percent * Percent * 10 - PI / 2) / 4;
   Result := Result * (1 - Percent) + 1;
@@ -382,7 +371,6 @@ end;
 
 class function TEasingDefaults.Boing(Percent: Float): Float;
 begin
-  if Percent < 0 then Exit(0) else if Percent > 1 then Exit(1);
   Percent := Power(Percent, 1.5);
   Result := Sin(PI * Power(Percent, 2) * 20 - PI / 2) / 4;
   Result := Result * (1 - Percent) + 1;
@@ -426,6 +414,16 @@ end;
 
 function Interpolate(Easing: TEasing; Percent: Float; Reverse: Boolean = False): Float;
 begin
+	if Percent < 0 then
+  	if Reverse then
+	  	Exit(1)
+		else
+	  	Exit(0);
+  if Percent > 1 then
+	  if Reverse then
+  	  Exit(0)
+	  else
+  	  Exit(1);
   if Reverse then
     Result := 1 - Easing(1 - Percent)
   else
@@ -516,17 +514,6 @@ begin
   Exit(V);
 end;
 
-{
-var
-  V: TVec1Prop;
-begin
-  //UIntPtr(V.FProp) := 0;
-  V.FProp := Prop;
-  V.FIndex := Index;
-  Exit(V);
-end;
-
-}
 class function TVec1Prop.Create(Prop: IDependencyProperty; Index: LongInt): TVec1Prop;
 begin
   UIntPtr(Result.FProp) := 0;
