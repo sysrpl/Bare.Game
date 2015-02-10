@@ -12,11 +12,11 @@ If you have git installed type `git clone git@github.com:sysrpl/Bare.Game.git` t
 
 Open Lazaurs, goto file "Packages | Open Package File" and browse to "Bare.Game/source/barerun.lpk". Press compile.
 
-Goto file "Packages | Open Package File" and browse to "Bare.Game/tools/design/baredsgn.lpk". Press "Use | Install".
+Goto file "Packages | Open Package File" and browse to "Bare.Game/tools/design/baredsgn.lpk". Press "Use | Install". Lazarus will rebuild itself.
 
 If you recieve and error in splash.pas with a value of fsBlack, change it to clBlack, save the file, and repeat the step above.
 
-When Lazarus resstart selct "File | New ... | Project | Game Project". You should see a unit list like this.
+When Lazarus restarts, select "File | New ... | Project | Game Project" from the main menu. You should this skeletal program listing.
 
 ```
 program Game1;
@@ -50,7 +50,7 @@ begin
 end.
 ```
 
-Press F9 to run the example.You should see a black window with the title TWindow1. Next open "Bare.Game/examples/draw/draw.lpi" and press F9. You should see a window with an animated neon cursor and some instructional text. If both of those test pass, you've got a working install of Bare Game.
+Press F9 to run the example. You should see a black window with the title "TWindow1". Next open the project "Bare.Game/examples/draw/draw.lpi" and press F9. You should see a window with an animated neon cursor and some instructional text. If both of those test pass, you've got a working install of Bare Game.
 
 ## More information
 
