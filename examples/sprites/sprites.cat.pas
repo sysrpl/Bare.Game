@@ -7,7 +7,7 @@ interface
 uses
   Bare.System,
   Bare.Graphics,
-	Bare.Geometry,
+  Bare.Geometry,
   Bare.Example,
   Sprites.Web;
 
@@ -15,15 +15,15 @@ uses
 
 type
   TRunningCat = class(TSprite)
-	private
+  private
     class var Textures: TTextures;
-	  class var TexturesCount: Integer;
+    class var TexturesCount: Integer;
   private
     FFrame: Integer;
     procedure SetFrame(Value: Integer);
-	protected
-  	procedure Render; override;
-	public
+  protected
+    procedure Render; override;
+  public
     constructor Create(World: TWorld); override;
     destructor Destroy; override;
     property Frame: Integer read FFrame write SetFrame;

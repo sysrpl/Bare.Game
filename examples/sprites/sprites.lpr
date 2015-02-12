@@ -17,7 +17,7 @@ uses
 
 type
   TSpriteWindow = class(TWorldWindow)
-	private
+  private
     FBroken: TBackgroudSprite;
     FSky: TBackgroudSprite;
     FClouds: TBackgroudSprite;
@@ -63,12 +63,12 @@ begin
   inherited RenderInitialize;
   { Hide the cursor }
   Mouse.Visible := False;
-	{ If we draw something, let's use a 2 pixel wide yellow pen }
-	Pen.Color := clYellow;
+  { If we draw something, let's use a 2 pixel wide yellow pen }
+  Pen.Color := clYellow;
   Pen.Width := 2;
   { Load a looping audio track from the internet into bank zero }
-	Audio.Banks[0].Looping := True;
-	Audio.Samples.Add(WebGet(MusicUrl)).Play;
+  Audio.Banks[0].Looping := True;
+  Audio.Samples.Add(WebGet(MusicUrl)).Play;
   { Make room for our textures }
   Textures.Generate(TexGround + 1);
   { Load a some textures from the internet }
@@ -124,7 +124,7 @@ begin
   MessageQueue.Remove;
   if MessageQueue.KeyDown(VK_F2) then
     {  Toggle a 3D perspective when F2 is pressed }
-		FShow3D := not FShow3D;
+    FShow3D := not FShow3D;
 end;
 
 procedure TSpriteWindow.Render(Stopwatch: TStopwatch);
@@ -140,8 +140,8 @@ begin
   if FShow3D then
   begin
     {  A 3D perspective when F2 is toggled }
-  	glTranslatef(0, 0, -4);
-	  glRotatef(Sin(Stopwatch.Time * 2) * 20, 1, 0, 0);
+    glTranslatef(0, 0, -4);
+    glRotatef(Sin(Stopwatch.Time * 2) * 20, 1, 0, 0);
   end;
   { Draw some sprites }
   FSky.Size := FBroken.Size;
@@ -171,12 +171,12 @@ begin
   S := Format(Message, [Stopwatch.Time, Stopwatch.Framerate]);
   Font.Write(S, 1, 1, 0);
   Font.Write('Press F1 to toggle fullscreen - Press F2 to toggle 3D', 1,
-  	World.Width / 2, World.Height - 30, justifyCenter);
+    World.Width / 2, World.Height - 30, justifyCenter);
   if FShow3D then
   begin
     { If we're showing in a 3D perspective, move things around in 3D }
     FRunningCat.Position.Z := Sin(Stopwatch.Time * 2) * 3 + 4;
-  	FRunningCat.Rotation.Y := Sin(Stopwatch.Time * 4) * 20;
+    FRunningCat.Rotation.Y := Sin(Stopwatch.Time * 4) * 20;
   end
   else
   begin
@@ -191,9 +191,9 @@ begin
   if FShow3D then
   begin
     { If we're showing in a 3D perspective, stroke a yellow box around the cat }
-		FRunningCat.GetPolygon(P);
-	  Canvas.Path.Polygon(P);
-  	Canvas.Stroke(Pen);
+    FRunningCat.GetPolygon(P);
+    Canvas.Path.Polygon(P);
+    Canvas.Stroke(Pen);
   end;
 end;
 

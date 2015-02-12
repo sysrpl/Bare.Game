@@ -21,14 +21,14 @@ const
 var
   S: string;
 begin
-	WebStream.Free;
+  WebStream.Free;
   WebStream := TMemoryStream.Create;
   S := PathAdjustDelimiters(Url);
   if FileExists(S) then
-	  WebStream.LoadFromFile(S)
-	else
+    WebStream.LoadFromFile(S)
+  else
   begin
-	  Bare.Networking.Web.WebGet(BaseUrl + Url, WebStream);
+    Bare.Networking.Web.WebGet(BaseUrl + Url, WebStream);
     DirCreate(FileExtractPath(S));
     WebStream.SaveToFile(S);
   end;
@@ -37,8 +37,8 @@ begin
 end;
 
 initialization
-	WebStream := nil;
+  WebStream := nil;
 finalization
-	WebStream.Free;
+  WebStream.Free;
 end.
 
