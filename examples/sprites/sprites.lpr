@@ -12,7 +12,6 @@ uses
   Bare.Example,
   Bare.Networking.Web,
   Bare.Interop.OpenGL,
-  Sprites.Web,
   Sprites.Cat;
 
 { TSpriteWindow }
