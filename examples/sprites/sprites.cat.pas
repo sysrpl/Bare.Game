@@ -8,8 +8,7 @@ uses
   Bare.System,
   Bare.Graphics,
   Bare.Geometry,
-  Bare.Example,
-  Sprites.Web;
+  Bare.Example;
 
 { TRunningCat }
 
@@ -43,7 +42,7 @@ begin
   begin
     Textures := TTextures.Create;
     Textures.Generate(1);
-    Textures.Load(WebLoad(CatFile), TexCat);
+    Textures.Load(Download(CatFile), TexCat);
   end;
   Inc(TexturesCount);
   Texture := Textures[TexCat];

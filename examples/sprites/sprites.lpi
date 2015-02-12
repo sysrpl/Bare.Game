@@ -38,7 +38,7 @@
         <PackageName Value="barerun"/>
       </Item1>
     </RequiredPackages>
-    <Units Count="3">
+    <Units Count="2">
       <Unit0>
         <Filename Value="sprites.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -46,12 +46,8 @@
       <Unit1>
         <Filename Value="sprites.cat.pas"/>
         <IsPartOfProject Value="True"/>
+        <UnitName Value="Sprites.Cat"/>
       </Unit1>
-      <Unit2>
-        <Filename Value="sprites.web.pas"/>
-        <IsPartOfProject Value="True"/>
-        <UnitName Value="Sprites.Web"/>
-      </Unit2>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

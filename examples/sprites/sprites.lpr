@@ -28,10 +28,6 @@ type
     FRunningCat: TRunningCat;
     FShow3D: Boolean;
     FShowStart: Float;
-    FUrl: string;
-    FUrlCounter: Integer;
-    procedure WebProgress(Sender: TObject; var Args: TWebProgressArgs);
-    function WebDownload(const Url: string): TStream;
   protected
     procedure CreateParams(var Params: TCreateParams); override;
     procedure RenderInitialize; override;
@@ -51,31 +47,9 @@ begin
   Params.Multithreaded := True;
 end;
 
-procedure TSpriteWindow.WebProgress(Sender: TObject; var Args: TWebProgressArgs);
-begin
-  { To to increase download performance we only print progress every four notifications }
-  Inc(FUrlCounter);
-  if FUrlCounter mod 4 <> 0 then
-    Exit;
-  World.Update;
-  if Args.ContentLength > 0 then
-    Font.Write(Format('Loading %s %d% complete', [FUrl,
-      Round((Args.ReadLength / Args.ContentLength) * 100)]), 1, 1, 0)
-  else
-    Font.Write(Format('Loading %s (%d bytes read)', [FUrl, Args.ReadLength]), 1, 1, 0);
-  SwapBuffers;
-end;
-
-function TSpriteWindow.WebDownload(const Url: string): TStream;
-begin
-  { When we download show the user the download progress }
-  FUrl := Url;
-  Result := WebGet(Url, WebProgress);
-end;
-
 procedure TSpriteWindow.RenderInitialize;
 const
-  { Location to download resources }
+  { Audio supports 2 formats, PCM WAV and PCM compressed WAV }
   MusicUrl = 'sounds/mario.wav';
   { Image engine supports jpg, png, gif, and bmp formats }
   TexBrokenUrl = 'images/broken.jpg';
@@ -93,23 +67,25 @@ begin
   FShowStart := -1;
   { Hide the cursor }
   Mouse.Visible := False;
-  { If we draw something, let's use a 2 pixel wide yellow pen }
-  Pen.Color := clYellow;
+  { Use a 2 pixel wide white pen }
+  Pen.Color := clWhite;
   Pen.Width := 2;
-  { This is our loading progress }
-  WebLoad := WebDownload;
+  { In this example we download assets from here }
+  DownloadSource := 'http://download.baregame.org/';
+  { Download screen has a black background }
+  glClearColor(0, 0, 0, 1);
   { Load a looping audio track from the internet into bank zero }
   Audio.Banks[0].Looping := True;
-  Audio.Samples.Add(WebLoad(MusicUrl)).Play;
+  Audio.Samples.Add(Download(MusicUrl)).Play;
   { Make room for our textures }
   Textures.Generate(TexGround + 1);
   { Load a some textures from the internet }
-  Textures.Load(WebLoad(TexBrokenUrl), TexBroken);
-  Textures.Load(WebLoad(TexSkyUrl), TexSky);
-  Textures.Load(WebLoad(TexCloudsUrl), TexClouds);
-  Textures.Load(WebLoad(TexMountainsUrl), TexMountains);
+  Textures.Load(Download(TexBrokenUrl), TexBroken);
+  Textures.Load(Download(TexSkyUrl), TexSky);
+  Textures.Load(Download(TexCloudsUrl), TexClouds);
+  Textures.Load(Download(TexMountainsUrl), TexMountains);
   Textures.Magnify[TexMountains] := filterNearest;
-  Textures.Load(WebLoad(TexGroundUrl), TexGround);
+  Textures.Load(Download(TexGroundUrl), TexGround);
   Textures.Magnify[TexGround] := filterNearest;
   { If you create it }
   FBroken := TBackgroudSprite.Create(World);
