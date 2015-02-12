@@ -43,7 +43,7 @@ begin
   begin
     Textures := TTextures.Create;
     Textures.Generate(1);
-    Textures.Load(WebGet(CatFile), TexCat);
+    Textures.Load(WebLoad(CatFile), TexCat);
   end;
   Inc(TexturesCount);
   Texture := Textures[TexCat];

@@ -10,6 +10,7 @@ uses
   Bare.Geometry,
   Bare.Graphics,
   Bare.Example,
+  Bare.Networking.Web,
   Bare.Interop.OpenGL,
   Sprites.Web,
   Sprites.Cat;
@@ -27,6 +28,10 @@ type
     FRunningCat: TRunningCat;
     FShow3D: Boolean;
     FShowStart: Float;
+    FUrl: string;
+    FUrlCounter: Integer;
+    procedure WebProgress(Sender: TObject; var Args: TWebProgressArgs);
+    function WebDownload(const Url: string): TStream;
   protected
     procedure CreateParams(var Params: TCreateParams); override;
     procedure RenderInitialize; override;
@@ -44,6 +49,28 @@ begin
   Params.Height := 720;
   { Just for fun, we'll use seperate threads for UI, Logic, and Render }
   Params.Multithreaded := True;
+end;
+
+procedure TSpriteWindow.WebProgress(Sender: TObject; var Args: TWebProgressArgs);
+begin
+  { To to increase download performance we only print progress every four notifications }
+  Inc(FUrlCounter);
+  if FUrlCounter mod 4 <> 0 then
+    Exit;
+  World.Update;
+  if Args.ContentLength > 0 then
+    Font.Write(Format('Loading %s %d% complete', [FUrl,
+      Round((Args.ReadLength / Args.ContentLength) * 100)]), 1, 1, 0)
+  else
+    Font.Write(Format('Loading %s (%d bytes read)', [FUrl, Args.ReadLength]), 1, 1, 0);
+  SwapBuffers;
+end;
+
+function TSpriteWindow.WebDownload(const Url: string): TStream;
+begin
+  { When we download show the user the download progress }
+  FUrl := Url;
+  Result := WebGet(Url, WebProgress);
 end;
 
 procedure TSpriteWindow.RenderInitialize;
@@ -69,18 +96,20 @@ begin
   { If we draw something, let's use a 2 pixel wide yellow pen }
   Pen.Color := clYellow;
   Pen.Width := 2;
+  { This is our loading progress }
+  WebLoad := WebDownload;
   { Load a looping audio track from the internet into bank zero }
   Audio.Banks[0].Looping := True;
-  Audio.Samples.Add(WebGet(MusicUrl)).Play;
+  Audio.Samples.Add(WebLoad(MusicUrl)).Play;
   { Make room for our textures }
   Textures.Generate(TexGround + 1);
   { Load a some textures from the internet }
-  Textures.Load(WebGet(TexBrokenUrl), TexBroken);
-  Textures.Load(WebGet(TexSkyUrl), TexSky);
-  Textures.Load(WebGet(TexCloudsUrl), TexClouds);
-  Textures.Load(WebGet(TexMountainsUrl), TexMountains);
+  Textures.Load(WebLoad(TexBrokenUrl), TexBroken);
+  Textures.Load(WebLoad(TexSkyUrl), TexSky);
+  Textures.Load(WebLoad(TexCloudsUrl), TexClouds);
+  Textures.Load(WebLoad(TexMountainsUrl), TexMountains);
   Textures.Magnify[TexMountains] := filterNearest;
-  Textures.Load(WebGet(TexGroundUrl), TexGround);
+  Textures.Load(WebLoad(TexGroundUrl), TexGround);
   Textures.Magnify[TexGround] := filterNearest;
   { If you create it }
   FBroken := TBackgroudSprite.Create(World);

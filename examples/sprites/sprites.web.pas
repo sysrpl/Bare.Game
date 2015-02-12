@@ -8,17 +8,21 @@ uses
   Bare.System,
   Bare.Networking.Web;
 
-function WebGet(const Url: string): TStream;
+var
+  WebLoad: function(const Url: string): TStream of object;
+
+function WebGet(const Url: string; OnProgress: TWebProgressEvent = nil): TStream;
 
 implementation
 
 var
   WebStream: TStream;
 
-function WebGet(const Url: string): TStream;
+function WebGet(const Url: string; OnProgress: TWebProgressEvent = nil): TStream;
 const
   BaseUrl = 'http://download.baregame.org/';
 var
+  Client: TWebClient;
   S: string;
 begin
   WebStream.Free;
@@ -28,7 +32,12 @@ begin
     WebStream.LoadFromFile(S)
   else
   begin
-    Bare.Networking.Web.WebGet(BaseUrl + Url, WebStream);
+    Client := TWebClient.Create;
+    try
+      Client.OnProgress := OnProgress;
+    finally
+      Client.Get(BaseUrl + Url, WebStream);
+    end;
     DirCreate(FileExtractPath(S));
     WebStream.SaveToFile(S);
   end;

@@ -13,6 +13,8 @@ unit Bare.Interop.SDL2;
 
 interface
 
+{.$define static}
+
 {$ifdef static}
   {$define libsdl2 := external}
 {$else}
@@ -2317,6 +2319,7 @@ const
 implementation
 
 {$ifdef static}
+	{$linklib SDL2}
 {$endif}
 
 { Macros from all headers }
