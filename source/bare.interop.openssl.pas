@@ -21,7 +21,6 @@ interface
   {$define libssl := external}
   {$define libcrypto := external}
 {$else}
-  {$define latebind}
   {$ifdef linux}
     {$define libsslres := 'libssl.so'}
     {$define libcryptores := 'libssl.so'}
@@ -29,6 +28,7 @@ interface
     {$define libcrypto := external 'libssl.so'}
   {$endif}
   {$ifdef windows}
+		{$define latebind}
     {$define libsslres := 'libssl.dll'}
     {$define libcryptores := 'libcrypto.dll'}
     {$define libssl := external 'libssl.dll'}
