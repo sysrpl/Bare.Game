@@ -3,6 +3,7 @@ program sprites;
 {$mode delphi}
 
 uses
+  Bare.Animation,
   Bare.System,
   Bare.Types,
   Bare.Game,
@@ -25,6 +26,7 @@ type
     FGround: TBackgroudSprite;
     FRunningCat: TRunningCat;
     FShow3D: Boolean;
+    FShowStart: Float;
   protected
     procedure CreateParams(var Params: TCreateParams); override;
     procedure RenderInitialize; override;
@@ -61,6 +63,7 @@ const
   TexGround = TexMountains + 1;
 begin
   inherited RenderInitialize;
+  FShowStart := -1;
   { Hide the cursor }
   Mouse.Visible := False;
   { If we draw something, let's use a 2 pixel wide yellow pen }
@@ -82,7 +85,6 @@ begin
   { If you create it }
   FBroken := TBackgroudSprite.Create(World);
   FBroken.Texture := Textures[TexBroken];
-  FBroken.Origin := Vec2(0, 0);
   FSky := TBackgroudSprite.Create(World);
   FSky.Texture := Textures[TexSky];
   FSky.Origin := Vec2(0, 0);
@@ -123,26 +125,33 @@ begin
     joystick, keyboard, and mouse events }
   MessageQueue.Remove;
   if MessageQueue.KeyDown(VK_F2) then
+  begin
     {  Toggle a 3D perspective when F2 is pressed }
     FShow3D := not FShow3D;
+    FShowStart := Stopwatch.Time;
+  end;
 end;
 
 procedure TSpriteWindow.Render(Stopwatch: TStopwatch);
 const
   Message = 'Time: %.2f'#10'Framerate: %d';
 var
+  Perspective: Float;
+  Easing: TEasing;
   P: TPolygon;
   S: string;
 begin
   World.Update;
   FBroken.Size := Vec2(World.Width, World.Height);
+  FBroken.Angle.X := Stopwatch.Time * 45;
   FBroken.Draw;
-  if FShow3D then
-  begin
-    {  A 3D perspective when F2 is toggled }
-    glTranslatef(0, 0, -4);
-    glRotatef(Sin(Stopwatch.Time * 2) * 20, 1, 0, 0);
-  end;
+  Perspective := Stopwatch.Time - FShowStart;
+  Easing := TEasingDefaults.Easy;
+  Perspective := Interpolate(Easing, Perspective);
+  if not FShow3D then
+    Perspective := 1 - Perspective;
+  glTranslatef(0, 0, -4 * Perspective);
+  glRotatef(Sin(Stopwatch.Time * 2) * 20  * Perspective, 1, 0, 0);
   { Draw some sprites }
   FSky.Size := FBroken.Size;
   FSky.Draw;
@@ -172,17 +181,9 @@ begin
   Font.Write(S, 1, 1, 0);
   Font.Write('Press F1 to toggle fullscreen - Press F2 to toggle 3D', 1,
     World.Width / 2, World.Height - 30, justifyCenter);
-  if FShow3D then
-  begin
     { If we're showing in a 3D perspective, move things around in 3D }
-    FRunningCat.Position.Z := Sin(Stopwatch.Time * 2) * 3 + 4;
-    FRunningCat.Rotation.Y := Sin(Stopwatch.Time * 4) * 20;
-  end
-  else
-  begin
-    FRunningCat.Position.Z := 0;
-    FRunningCat.Rotation.Y := 0;
-  end;
+  FRunningCat.Position.Z := (Sin(Stopwatch.Time * 2) * 3 + 4) * Perspective;
+  FRunningCat.Rotation.Y := Sin(Stopwatch.Time * 4) * 20 * Perspective;
   FRunningCat.Position.X := World.Width / 2;
   FRunningCat.Position.Y := World.Height - 215;
   { Our cat is running based on the current time }
@@ -200,4 +201,3 @@ end;
 begin
   Application.Run(TSpriteWindow);
 end.
-
