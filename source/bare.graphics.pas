@@ -255,6 +255,8 @@ type
     FHalfWidth: Float;
     FHalfHeight: Float;
     FTangent: Float;
+    FOrthoWidth: Integer;
+    FOrthoHeight: Integer;
   public
     { Create a 2d world based on a rectangular area }
     constructor Create(Window: IWindow);
@@ -270,6 +272,18 @@ type
     function SpaceToWorld(X, Y, Z: Float): TVec2; overload;
     { Convert a vec3 from 3d space coordinates to 2d world coordinates }
     function SpaceToWorld(const V: TVec3): TVec2; overload;
+    { Maps a window to emulate a specific resolution }
+    procedure OrthoMap(Width, Height: Integer);
+    { Maps a window to its own size }
+    procedure OrthoUnmap;
+    { Convert a window x, y to a resolution specific point }
+    function OrthoPoint(X, Y: Float): TVec2; overload;
+    { Convert a window point to a resolution specific point }
+    function OrthoPoint(V: TVec2): TVec2; overload;
+    { Set the current clear color }
+    procedure ClearColor(R, G, B: Float; A: Float = 1.0); overload;
+    { Set the current clear color }
+    procedure ClearColor(const Color: TColorF); overload;
     { Set the current drawing color }
     procedure Color(R, G, B: Float; A: Float = 1.0); overload;
     { Set the current drawing color }
@@ -311,16 +325,6 @@ type
     property Height: Float read FHeight;
   end;
 
-{ TGraphicObject\<T\> is an abstract class related to graphics
-  See also
-  <link Overview.Bare.Graphics.TGraphicObject, TGraphicObject\<T\> members> }
-
-  TGraphicObject<T> = class(TPersistsObject, ICloneable<T>)
-  public
-    { Creates a copy of the object }
-    function Clone: T; virtual; abstract;
-  end;
-
   {doc ignore}
   TCustomSprite = class;
 
@@ -330,7 +334,7 @@ type
   See also
   <link Overview.Bare.Graphics.TCustomSprite, TCustomSprite members> }
 
-  TCustomSprite = class(TGraphicObject<TCustomSprite>)
+  TCustomSprite = class(TPersistsObject)
   private
     FWorld: TWorld;
     FTexture: GLuint;
@@ -392,7 +396,7 @@ type
     { Create a sprite in a 2d world }
     constructor Create(World: TWorld); virtual;
     { Create a copy of the sprite }
-    function Clone: TCustomSprite; override;
+    function Clone: TCustomSprite;
     { Draw the sprite by updating and rendering }
     procedure Draw;
     { Update the sprite matrix and geometry }
@@ -860,19 +864,26 @@ begin
   glLoadIdentity;
 end;
 
+{ Convert 2d window coordinates to 3d world coordinates }
+
 function TWorld.WorldToSpace(X, Y: Float): TVec3;
 begin
+  if FOrthoWidth > 0 then
+  begin
+    X := X / FOrthoWidth * FWidth;
+    Y := Y / FOrthoHeight * FHeight;
+  end;
   Result := Vec3(X - FHalfWidth, FHalfHeight - Y, FDepth);
   Result.X := Result.X * FRatio;
   Result.Y := Result.Y * FRatio;
 end;
 
-{ Convert 2d window coordinates to 3d world coordinates }
-
 function TWorld.WorldToSpace(const V: TVec2): TVec3;
 begin
   Result := WorldToSpace(V.X, V.Y);
 end;
+
+{ Convert 3d world coordinates to 2d window coordinates }
 
 function TWorld.SpaceToWorld(X, Y, Z: Float): TVec2;
 begin
@@ -888,13 +899,63 @@ begin
     Result.X := 0;
     Result.Y := 0;
   end;
+  if FOrthoWidth > 0 then
+  begin
+    Result.X := Result.X / FWidth * FOrthoWidth;
+    Result.Y := Result.Y / FHeight * FOrthoHeight;
+  end;
 end;
-
-{ Convert 3d world coordinates to 2d window coordinates }
 
 function TWorld.SpaceToWorld(const V: TVec3): TVec2;
 begin
   Result := SpaceToWorld(V.X, V.Y, V.Z);
+end;
+
+procedure TWorld.OrthoMap(Width, Height: Integer);
+begin
+  FOrthoWidth := Width;
+  FOrthoHeight := Height;
+  if (FOrthoWidth < 1) or (FOrthoHeight < 0) then
+  begin
+    FOrthoWidth := 0;
+    FOrthoHeight := 0;
+  end;
+end;
+
+procedure TWorld.OrthoUnmap;
+begin
+  FOrthoWidth := 0;
+  FOrthoHeight := 0;
+end;
+
+function TWorld.OrthoPoint(X, Y: Float): TVec2;
+begin
+  if (FWidth > 0) and (FOrthoWidth > 0) then
+  begin
+    Result.X := X / FWidth * FOrthoWidth;
+    Result.Y := Y / FHeight * FOrthoHeight
+  end
+  else
+  begin
+    Result.X := X;
+    Result.Y := Y;
+  end;
+end;
+
+function TWorld.OrthoPoint(V: TVec2): TVec2;
+begin
+  Result := OrthoPoint(V.X, V.Y);
+end;
+
+procedure TWorld.ClearColor(R, G, B: Float; A: Float = 1.0);
+begin
+  glClearColor(R, G, B, A);
+end;
+
+procedure TWorld.ClearColor(const Color: TColorF);
+begin
+  with Color do
+    glClearColor(R, G, B, A);
 end;
 
 procedure TWorld.Color(R, G, B: Float; A: Float = 1.0);

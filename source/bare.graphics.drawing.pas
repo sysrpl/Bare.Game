@@ -29,20 +29,13 @@ uses
   Bare.Graphics.Imaging,
   Bare.Interop.OpenGL;
 
-{doc off}
-type
-  TSubPath = class;
-  TPath = class;
-  TPen = class;
-  TBrush = class;
-{doc on}
-
 { TSubPath is a container for vector lines and curves
   See also
   <link Overview.Bare.Graphics.Drawing.TSubPath, TSubPath members>
   <link Bare.Graphics.Drawing.TPath, TPath class> }
 
-  TSubPath = class(TGraphicObject<TSubPath>)
+type
+  TSubPath = class(TPersistsObject)
   private
     FClosed: Boolean;
     FCurves: TList<TCurve2>;
@@ -55,7 +48,7 @@ type
     constructor Create;
     destructor Destroy; override;
     { Create a copy of the sub path }
-    function Clone: TSubPath; override;
+    function Clone: TSubPath;
     { Find a heading normal at a distance along the sub path }
     function FindNormal(Dist: Float): TVec2;
     { Find a point at a distance along the sub path }
@@ -71,7 +64,7 @@ type
   See also
   <link Overview.Bare.Graphics.Drawing.TPath, TPath members> }
 
-  TPath = class(TGraphicObject<TPath>)
+  TPath = class(TPersistsObject)
   private
     FSubPaths: TSubPaths;
     FPosition: TVec2;
@@ -90,7 +83,7 @@ type
     { Returns a sub path enumerator }
     function GetEnumerator: TEnumerator;
     { Create a copy of the path }
-    function Clone: TPath; override;
+    function Clone: TPath;
     { Create a new sub path leaving the previous path opened }
     procedure Open;
     { Create a new sub path leaving the previous path closed }
@@ -129,7 +122,7 @@ type
   <link Overview.Bare.Graphics.Drawing.TPen, TPen members>
   <link Bare.Graphics.Drawing.TCanvas, TCanvas class> }
 
-  TPen = class(TGraphicObject<TPen>)
+  TPen = class(TPersistsObject)
   private
     FColor: TVec4Prop;
     FWidth: TVec1Prop;
@@ -142,7 +135,7 @@ type
     { Create a pen with a color and optional width }
     constructor Create(Color: TColorF; Width: Float = 1);
     { Create a copy of the pen }
-    function Clone: TPen; override;
+    function Clone: TPen;
     { Color used when stroking paths }
     property Color: TVec4Prop read FColor write SetColor;
     { Width of the stroke }
@@ -155,7 +148,7 @@ type
   <link Overview.Bare.Graphics.Drawing.TBrush, TBrush members>
   <link Bare.Graphics.Drawing.TCanvas, TCanvas class> }
 
-  TBrush = class(TGraphicObject<TBrush>)
+  TBrush = class(TPersistsObject)
   private
     FColor: TVec4Prop;
     procedure SetColor(const Value: TVec4Prop);
@@ -166,7 +159,7 @@ type
     { Create a pen with a color  }
     constructor Create(Color: TColorF);
     { Create a copy of the brush }
-    function Clone: TBrush; override;
+    function Clone: TBrush;
     { Color used when filling paths }
     property Color: TVec4Prop read FColor write SetColor;
   end;
@@ -443,7 +436,6 @@ end;
 procedure TPath.Polygon(Shape: TPolygon; Closed: Boolean = True);
 var
   SubPath: TSubPath;
-  Curve: TCurve2;
 begin
   if Length(Shape) < 2 then
     Exit;
@@ -707,6 +699,7 @@ begin
   FWorld.Color(Pen.Color);
   Width := Pen.Width;
   glDisable(GL_DEPTH_TEST);
+  glDepthMask(False);
   for I := 0 to FPath.FSubPaths.Count - 1 do
   begin
     FWorld.BindTex(FTextures[TexStroke]);
@@ -735,7 +728,7 @@ begin
     FWorld.EndQuads;
     FWorld.UnbindTex;
   end;
-  glClear(GL_DEPTH_BUFFER_BIT);
+  glDepthMask(True);
   glEnable(GL_DEPTH_TEST);
   if Clear then
     FPath.Clear;

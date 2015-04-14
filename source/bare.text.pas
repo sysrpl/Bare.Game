@@ -59,7 +59,7 @@ type
     procedure SaveToFile(const FileName: string);
     procedure LoadFromStream(Stream: TStream);
     procedure SaveToStream(Stream: TStream);
-    function IndexOf(const Item: TItem): Integer; override;
+    function IndexOf(const Item: string): Integer; override;
     property CaseSensitive: Boolean read FCaseSensitive write FCaseSensitive;
     property Text: string read GetText write SetText;
     property Keys: TStringKeys read GetKeys;
@@ -249,7 +249,7 @@ begin
   inherited Destroy;
 end;
 
-procedure TStringList.AddItem(constref Item: TItem);
+procedure TStringList.AddItem(constref Item: string);
 var
   Lines: IntArray;
   S, B, L: string;
@@ -337,7 +337,7 @@ begin
   Result := FindStringI(A, StrUpper(B));
 end;
 
-function TStringList.IndexOf(const Item: TItem): Integer;
+function TStringList.IndexOf(const Item: string): Integer;
 begin
   if FCaseSensitive then
     Result := Find(FindString, StrUpper(Item))

@@ -436,6 +436,12 @@ type
       SDL_JOYDEVICEADDED: (JoystickDeviceArgs: TJoystickDeviceArgs);
   end;
 
+{ TMessages is returned from <link Bare.Game.TMessages.Remove, TMessageQueue.Remove method>
+  See also
+  <link Bare.Game.TMessage, TMessage record> }
+
+  TMessages = TArray<TMessage>;
+
 { When writing a multithreaded game use <link Bare.Game.TWindow.MessageQueue, MessageQueue>
   to safely access the user input queue in your <link Bare.Game.TWindow.Logic, Logic method>
   See also
@@ -443,14 +449,9 @@ type
   <link Bare.Game.TMessageQueue.Remove, Remove method> }
 
   TMessageQueue = class
-  public
-    { Type retruned from remove
-      See also
-      <link Bare.Game.TMessages, TMessages type }
-    type TItems = TArray<TMessage>;
   private
-    FItems: TItems;
-    FQueue: TItems;
+    FMessages: TMessages;
+    FQueue: TMessages;
     FCount: Integer;
   public
     { Use <link Bare.Game.TWindow.MessageQueue, TWindow.MessageQueue property> instead of
@@ -464,7 +465,7 @@ type
       Remarks
       It is recommended that you make use of <link Bare.Game.TWindow.MessageQueue, MessageQueue.Remove>
       at the start of your <link Bare.Game.TWindow.Logic, Logic> method }
-    function Remove: TItems;
+    function Remove: TMessages;
     { Returns true if key is down in the queue }
     function KeyDown(Key: TVirtualKeyCode): Boolean;
     { Returns true if key is up in the queue }
@@ -478,12 +479,8 @@ type
     { Returns true if mouse is up in the queue while capturing the position and shift state }
     function MouseUp(Button: TMouseButton; out X, Y: Integer; out Shift: TShiftState): Boolean; overload;
     { The result of the last remove operation }
-    property Queue: TItems read FQueue;
+    property Queue: TMessages read FQueue;
   end;
-
-{ TMessages is returned from <link Bare.Game.TMessages.Remove, TMessageQueue.Remove method> }
-
-  TMessages = TMessageQueue.TItems;
 
   { TEmptyEvent notifies you that window focus was gained or lost }
   TFocusEvent = TEventHandler<TFocusArgs>;
@@ -837,6 +834,7 @@ type
     FButtons: TMouseButtons;
     FX: Integer;
     FY: Integer;
+    function GetCoord: TPointI;
     function GetCaptured: Boolean;
     procedure SetCaptured(Value: Boolean);
     function GetVisible: Boolean;
@@ -848,6 +846,8 @@ type
     procedure Move(X, Y: Integer);
     { The mouse button state }
     property Buttons: TMouseButtons read FButtons;
+    { The position of the mouse relative to the window with mouse focus }
+    property Coord: TPointI read GetCoord;
     { The x position of the mouse relative to the window with mouse focus }
     property X: Integer read FX;
     { The y position of the mouse relative to the window with mouse focus }
@@ -1587,7 +1587,7 @@ const
 constructor TMessageQueue.Create;
 begin
   inherited Create;
-  SetLength(FItems, DefaultQueueSize);
+  SetLength(FMessages, DefaultQueueSize);
 end;
 
 procedure TMessageQueue.Add(var Message: TMessage);
@@ -1597,14 +1597,14 @@ begin
     { Queue ignores adds when the count is over the maximum limit }
     if FCount = DefaultQueueSize then
       Exit;
-    FItems[FCount] := Message;
+    FMessages[FCount] := Message;
     Inc(FCount);
   finally
     Unlock;
   end;
 end;
 
-function TMessageQueue.Remove: TItems;
+function TMessageQueue.Remove: TMessages;
 var
   I: Integer;
 begin
@@ -1612,7 +1612,7 @@ begin
   try
     SetLength(Result, FCount);
     for I := 0 to FCount - 1 do
-      Result[I] := FItems[I];
+      Result[I] := FMessages[I];
     FQueue := Result;
     FCount := 0;
   finally
@@ -2277,6 +2277,12 @@ end;
 procedure TMouse.Move(X, Y: Integer);
 begin
   SDL_WarpMouseInWindow(nil, X, Y);
+end;
+
+function TMouse.GetCoord: TPointI;
+begin
+  Result.X := FX;
+  Result.Y := FY;
 end;
 
 function TMouse.GetCaptured: Boolean;
