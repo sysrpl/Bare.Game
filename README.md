@@ -15,7 +15,7 @@ Install SDL 2 on your system. Ubuntu users type `sudo apt get install libsdl2-2.
 
 Install Free Pascal fixes 3.0 and Lazarus, either using [getlazarus.org](http://www.getlazarus.org/setup) or [make it yourself](http://www.getlazarus.org/setup/making). 
 
-To get Bare Game, if you have git installed type:
+To get Bare Game, if you have git installed you may type:
 
 `git clone https://github.com/sysrpl/Bare.Game.git` 
 
