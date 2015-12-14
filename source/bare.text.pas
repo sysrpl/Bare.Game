@@ -253,7 +253,7 @@ procedure TStringList.AddItem(constref Item: string);
 var
   Lines: IntArray;
   S, B, L: string;
-  I, J: Integer;
+  I, J, K: Integer;
 begin
   S := StrAdjustLineBreaks(Item);
   B := LineEnding;
@@ -266,12 +266,17 @@ begin
   J := 1;
   for I := Low(Lines) to High(Lines) do
   begin
-    L := StrCopy(S, J, Lines[I] - J);
+    K := Lines[I] - J; // StrCopy if K = 0  then all strings copy in one item
+    if K > 0 then
+      L := StrCopy(S, J, K)
+    else
+      L := '';
     inherited AddItem(L);
     Inc(J, Length(L) + Length(B));
   end;
   L := StrCopy(S, J, Length(S) + 1);
-  inherited AddItem(L);
+  if L <> '' then
+    inherited AddItem(L);
 end;
 
 procedure TStringList.LoadFromFile(const FileName: string);
@@ -310,7 +315,7 @@ begin
   Clear;
   if Stream.Cancelled then
     Exit;
-  I := Stream.Position - Stream.Size;
+  I := Stream.Size - Stream.Position;
   if I < 1 then
     Exit;
   Text := Stream.ReadStr(I);
@@ -359,14 +364,14 @@ function TStringList.GetText: string;
 var
   S, B: string;
   P: PChar;
-  I, J: Integer;
+  I, J, L: Integer;
 begin
   if Count = 0 then
     Exit('');
   if Count = 1 then
     Exit(Item[0]);
   I := 0;
-  J := -1;
+  J := 0;
   for S in Self do
   begin
     Inc(I, Length(S));
@@ -377,12 +382,14 @@ begin
   P := PChar(Result);
   for S in Self do
   begin
-    Move(PChar(S)^, P^, Length(S));
-    Inc(P, Length(S));
+    L := Length(S);
+    Move(PChar(S)^, P^, L);
+    Inc(P, L);
     if J > 0 then
     begin
-      Move(PChar(B)^, P^, Length(S));
-      Inc(P, Length(B));
+      L := Length(B);
+      Move(PChar(B)^, P^, L);
+      Inc(P, L);
     end;
     Dec(J);
   end;
