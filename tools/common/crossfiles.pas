@@ -513,7 +513,7 @@ var
   A, B: string;
 begin
   try
-    ForceDirectory(IncludeTrailingPathDelimiter(FLocation));
+    ForceDirectories(IncludeTrailingPathDelimiter(FLocation));
     Path := ExtractFilePath(FFileName);
     FileName := ExtractFileName(FFileName);
     Folder := StrFirstOf(FileName, '.');
